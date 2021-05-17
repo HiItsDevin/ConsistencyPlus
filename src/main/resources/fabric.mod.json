@@ -2,8 +2,9 @@
   "schemaVersion": 1,
   "id": "consistency_plus",
   "version": "${version}",
-  "name": "Consistency Plus",
-  "description": "Builders rejoice; we've added all the missing block variants!",
+
+  "name": "Consistency Plus: Kotlin Edition",
+  "description": "Builders rejoice; we've added all the missing block variants! Now with 100% more Kotlin!",
   "contributors": [
     {
       "name": "Carter",
@@ -59,22 +60,26 @@
     "issues": "https://github.com/ConsistencyPlus/ConsistencyPlus/issues",
     "sources": "https://github.com/ConsistencyPlus/ConsistencyPlus"
   },
+
   "license": "LGPLv3",
   "icon": "assets/consistency_plus/icon.png",
+
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.consistencyplus.consistency_plus.ConsistencyPlus"
-    ],
-    "client": [
-      "io.github.consistencyplus.consistency_plus.ConsistencyPlusClientside"
+      "io.github.consistencyplus.consistency_plus.ConsistencyPlusKt::init"
     ]
   },
   "mixins": [
     "consistency_plus.mixins.json"
   ],
   "depends": {
+    "fabricloader": ">=0.8.7",
     "fabric": "*",
-    "minecraft": "*"
+    "fabric-language-kotlin": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
   }
 }

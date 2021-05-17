@@ -9,10 +9,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static io.github.consistencyplus.consistency_plus.ConsistencyPlus.DIRT_ID;
-
 @Mixin(Block.class)
 public abstract class BlockMixin {
+    private static final int DIRT_ID = 0;
+
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/block/Block;getDefaultState()Lnet/minecraft/block/BlockState;", cancellable = true)
     public final void getDefaultState(CallbackInfoReturnable<BlockState> cir) {
         if ((Object) this == Blocks.DIRT) {

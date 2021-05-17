@@ -1,26 +1,22 @@
 package io.github.consistencyplus.consistency_plus.mixin;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.color.world.GrassColors;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static io.github.consistencyplus.consistency_plus.registry.Blocks.*;
+import static io.github.consistencyplus.consistency_plus.ConsistencyPlus.DIRT_ID;
 
-// couldn't figure out how to get grass working with the regular color provider method so here we are
-@Environment(EnvType.CLIENT)
-@Mixin(BlockColors.class)
-public abstract class BlockColorsMixin {
-    @Inject(at = @At("TAIL"), method = "Lnet/minecraft/client/color/block/BlockColors;create()Lnet/minecraft/client/color/block/BlockColors;")
-    private static void create(CallbackInfoReturnable<BlockColors> cir) {
-        cir.getReturnValue().registerColorProvider((state, world, pos, tintIndex) -> {
-            return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D);
-        }, GRASS_SLAB, GRASS_STAIRS, GRASS_WALL);
-
+@Mixin(Block.class)
+public abstract class BlockMixin {
+    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/block/Block;getDefaultState()Lnet/minecraft/block/BlockState;", cancellable = true)
+    public final void getDefaultState(CallbackInfoReturnable<BlockState> cir) {
+        if ((Object) this == Blocks.DIRT) {
+            cir.setReturnValue(Registry.BLOCK.get(DIRT_ID).getDefaultState());
+        }
     }
 }
